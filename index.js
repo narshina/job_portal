@@ -1,0 +1,53 @@
+import express from "express"
+import cors from "cors"
+import mongoose from "mongoose"
+import user from "./Models/user.js";
+import job from "./Models/job.js";
+mongoose.connect('mongodb://127.0.0.1:27017/job')
+  .then(() => console.log('Connected!'));
+
+const app=express()
+app.use(cors())
+app.use(express.json())
+
+app.post('/register',async(req,res)=>{
+    try{
+        console.log(req.body)
+        let newuser=new user(req.body)
+        console.log(newuser,'new user');
+        let response=await newuser.save()
+        res.json(response)
+        console.log(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+app.post('/login',async (req,res)=>{
+    console.log(req.body);
+    const {email,password}=req.body
+    let users=await user.findOne({email:email,password:password})
+    console.log(users);
+    res.json(users)
+})
+
+app.post('/addjob',async(req,res)=>{
+    try{
+        console.log(req.body)
+        let newjob=new job(req.body)
+        console.log(newjob,'new job');
+        let response=await newjob.save()
+        res.json(response)
+        console.log(response)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+app.get('/vjob',async(req,res)=>{
+    let response=await job.find()
+    console.log(response)
+    res.json(response)
+})
+
+app.listen(4000)
