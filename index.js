@@ -3,6 +3,7 @@ import cors from "cors"
 import mongoose from "mongoose"
 import user from "./Models/user.js";
 import job from "./Models/job.js";
+import apply from "./Models/application.js";
 mongoose.connect('mongodb://127.0.0.1:27017/job')
   .then(() => console.log('Connected!'));
 
@@ -44,10 +45,44 @@ app.post('/addjob',async(req,res)=>{
         res.json(e.message)
     }
 })
+app.post('/applyjob',async(req,res)=>{
+    try{
+        console.log(req.body);
+        console.log(req.body);
+        let newapply=new apply(req.body)
+        console.log(newapply);
+        let response=await newapply.save()
+        res.json(response)
+        console.log(response);
+    }
+    catch(e){
+       res.json(e.message)
+    }
+})
+
 app.get('/vjob',async(req,res)=>{
     let response=await job.find()
     console.log(response)
     res.json(response)
+})
+app.get('/vapply',async(req,res)=>{
+    let applicationdetails=await apply.find()
+    console.log(applicationdetails);
+    let responsedata=[]
+    for(let x of applicationdetails){
+        let response=await user.findById(x.userid)
+        let jobs=await job.findById(x.jobid)
+        console.log(jobs);
+        responsedata.push({
+            applications:x,
+            job:jobs,
+            user:response
+
+        })
+
+    }
+    console.log(responsedata);
+    res.json(responsedata)
 })
 
 app.listen(4000)
