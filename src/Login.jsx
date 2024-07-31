@@ -16,7 +16,7 @@ export const Login = () => {
             localStorage.setItem('id',response.data._id)
             localStorage.setItem('email',response.data.email)
             if(response.data.usertype=="admin"){
-               navigate('/addjob')
+               navigate('/admin')
             }
             if(response.data.usertype=='user'){
                 navigate('/viewjob')

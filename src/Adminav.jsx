@@ -1,0 +1,22 @@
+import React from 'react'
+import { Link, Outlet } from 'react-router-dom'
+
+export const Adminav = () => {
+  return (
+    <>
+<div className='p-7 bg-pink-950 text-white flex justify-between'>
+        <div className='text-[23px] font-semibold'>CareerBuilder</div>
+        <div className='flex flex-wrap gap-6'>
+      <button>HOME</button>
+     <Link to='/admin/addjob' ><button>ADD JOB</button></Link>
+      <button>VIEW JOB</button>
+     <Link to='/admin/viewapply'> <button>APPLICATIONS</button></Link>
+      <button>LOG OUT</button>
+
+        </div>
+       
+    </div>
+    <Outlet></Outlet>
+    </>
+      )
+}

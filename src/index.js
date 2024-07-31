@@ -9,19 +9,34 @@ import { Login } from './Login';
 import { Addjob } from './Addjob';
 import { Viewjob } from './Viewjob';
 import { Apply } from './Apply';
+import { Home } from './Home';
+import { Viewapply } from './Viewapply';
+import { Adminav } from './Adminav';
+import { Adminhome } from './Adminhome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
+    <Route path='/home' element={<Home/>}/>
       <Route path='/' element={<Userreg/>}/>
       <Route path='/login' element={<Login/>}/>
-      <Route path='/addjob' element={<Addjob/>}/>
       <Route path='/viewjob' element={<Viewjob/>}/>
-      <Route path='/apply' element={<Apply/>}/>
+      <Route path='/apply/:id' element={<Apply/>}/>
+      
+      <Route path='/admin' element={<Adminav/>}>
+      <Route index element={<Adminhome/>}/>
+      <Route path='addjob' element={<Addjob/>}/>
+      <Route path='viewapply' element={<Viewapply/>}/>
+
+
+      </Route>
+
 
     </Routes>
+    
+    
     </BrowserRouter>
   </React.StrictMode>
 );

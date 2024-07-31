@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+.bg{
+  background-image: url(tt.avif);
+  width: 100%;
+  background-repeat: no-repeat;
+  height: 50rem;
+  align-items: center;
+  background-size: 100%;
+
+}
