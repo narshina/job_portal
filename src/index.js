@@ -13,22 +13,37 @@ import { Home } from './Home';
 import { Viewapply } from './Viewapply';
 import { Adminav } from './Adminav';
 import { Adminhome } from './Adminhome';
+import { Adminvjob } from './Adminvjob';
+import { Editjob } from './Editjob';
+import { Navbar } from './Navbar';
+import { Addimage } from './Addimage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Routes>
-    <Route path='/home' element={<Home/>}/>
-      <Route path='/' element={<Userreg/>}/>
-      <Route path='/login' element={<Login/>}/>
       <Route path='/viewjob' element={<Viewjob/>}/>
       <Route path='/apply/:id' element={<Apply/>}/>
+
+      <Route path='/' element={<Navbar/>}>
+      <Route index element={<Home/>}/>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/register' element={<Userreg/>}/>
+
+
+      </Route>
       
       <Route path='/admin' element={<Adminav/>}>
       <Route index element={<Adminhome/>}/>
       <Route path='addjob' element={<Addjob/>}/>
       <Route path='viewapply' element={<Viewapply/>}/>
+      <Route path='advjob' element={<Adminvjob/>}/>
+      <Route path='editjob/:id' element={<Editjob/>}/>
+      <Route path='addimage' element={<Addimage/>}/>
+
+
+
 
 
       </Route>
