@@ -4,6 +4,9 @@ import mongoose from "mongoose"
 import user from "./Models/user.js";
 import job from "./Models/job.js";
 import apply from "./Models/application.js";
+import message from "./Models/message.js";
+import { upload } from "./multer.js";
+import image from "./Models/image.js";
 mongoose.connect('mongodb://127.0.0.1:27017/job')
   .then(() => console.log('Connected!'));
 
@@ -83,6 +86,68 @@ app.get('/vapply',async(req,res)=>{
     }
     console.log(responsedata);
     res.json(responsedata)
+})
+app.delete('/delete/:id',async(req,res)=>{
+    let id=req.params.id
+    let response=await job.findByIdAndDelete(id)
+})
+app.get('/vjobdetail/:id',async(req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await job.findById(id)
+    console.log(response);
+    res.json(response)
+})
+app.put('/editjob/:id',async(req,res)=>{
+    let id=req.params.id
+    console.log(id);
+    let response=await job.findByIdAndUpdate(id,req.body,{new:true})
+    console.log(response);
+    res.json(response)
+})
+app.post('/send',async(req,res)=>{
+    try{
+        console.log(req.body);
+        let newmessage=new message(req.body)
+        console.log(newmessage); 
+        let response=await newmessage.save()
+        res.json(response)
+        console.log(response);
+        
+    }
+    catch{
+
+    }
+})
+app.get('/viewmessage',async(req,res)=>{
+        let response=await message.find({name:"narshina"})
+        console.log(response);
+        res.json(response)
+        
+})
+app.get('/vmessage',async(req,res)=>{
+    let response=await message.find({reciever:"akash"})
+    console.log(response);
+    res.json(response)
+    
+})
+app.post('/addimage',upload.single('image'),async(req,res)=>{
+    try{
+    console.log(req.file)
+    let imagepath=req.file.filename
+    const newProduct = new image({...req.body,image:imagepath})
+    const savedProduct = await newProduct.save();
+    res.json(savedProduct)
+    }
+    catch(e){
+        res.json(e.message)
+    }
+})
+app.get('/vimage',async(req,res)=>{
+    let response=await image.find()
+    console.log(response);
+    res.json(response)
+    
 })
 
 app.listen(4000)
