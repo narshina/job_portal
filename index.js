@@ -5,14 +5,28 @@ import user from "./Models/user.js";
 import job from "./Models/job.js";
 import apply from "./Models/application.js";
 import message from "./Models/message.js";
-import { upload } from "./multer.js";
+// import { upload } from "./multer.js";
 import image from "./Models/image.js";
+import multer from 'multer'
+
 mongoose.connect('mongodb://127.0.0.1:27017/job')
   .then(() => console.log('Connected!'));
 
 const app=express()
 app.use(cors())
 app.use(express.json())
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now();
+        cb(null, uniqueSuffix + file.originalname)
+    }
+  });
+  
+  export const upload = multer({ storage: storage });
 
 app.post('/register',async(req,res)=>{
     try{
@@ -146,8 +160,7 @@ app.post('/addimage',upload.single('image'),async(req,res)=>{
 app.get('/vimage',async(req,res)=>{
     let response=await image.find()
     console.log(response);
-    res.json(response)
-    
+    res.json(response) 
 })
 
 app.listen(4000)
