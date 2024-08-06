@@ -36,7 +36,7 @@ export const Addimage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/vimage');
-        console.log("Fetched images:", response.data); // Debug log
+        console.log("Fetched images:", response.data,'dfgdfg'); // Debug log
         setPicture(response.data); // Ensure we set the data part of the response
       } catch (e) {
         console.error("Error fetching images", e);
@@ -51,16 +51,21 @@ export const Addimage = () => {
         <input onChange={handleFile} name='image' type='file' />
         <button className='bg-black text-white' type='submit'>Submit</button>
       </form>
-      {picture.map((item) => (
+      {picture.map((item) => {
+        console.log(`http://localhost:4000/uploads/${item.image}`);
+        
         <div key={item._id}>
           <img
             className='h-96 w-96'
             src={`http://localhost:4000/uploads/${item.image}`}
             alt=''
+    
             onError={(e) => console.error('Image not found:', e.target.src)} // Debug log
           />
+          <div>{item._id}</div>
         </div>
-      ))}
+        
+})}
     </div>
   );
 };

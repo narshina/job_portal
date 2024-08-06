@@ -17,6 +17,7 @@ import { Adminvjob } from './Adminvjob';
 import { Editjob } from './Editjob';
 import { Navbar } from './Navbar';
 import { Addimage } from './Addimage';
+import { Viewimage } from './Viewimage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -41,6 +42,8 @@ root.render(
       <Route path='advjob' element={<Adminvjob/>}/>
       <Route path='editjob/:id' element={<Editjob/>}/>
       <Route path='addimage' element={<Addimage/>}/>
+      <Route path='viewimage' element={<Viewimage/>}/>
+
 
 
 
